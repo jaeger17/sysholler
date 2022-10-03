@@ -1,3 +1,7 @@
+#ifndef _POSIX_C_SOURCE
+#define _POSIX_C_SOURCE 2 // getopt()
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -22,17 +26,21 @@ void exec2(int *pipe1, int *pipe2);
 void exec3(int *pipe2);
 
 int main_loop();
+int parse_options(syscall_macros_t *s, int argc, char *argv[]);
 
 int main(int argc, char * argv[])
 {
 	int check;
 	int pipe1[2];
 	int pipe2[2];
-	int stdout_copy;
 	pid_t fork_pid;
 	syscall_macros_t s = {0};
-	
-	// TODO: arg check and options handler
+
+	// check command-line options
+	check = parse_options(&s, argc, argv);
+	if (check == -1) {
+		goto failure;
+	}
 
 	// TODO: open and read into Syscall macro struct
 
@@ -77,9 +85,9 @@ int main(int argc, char * argv[])
 
 	waitpid(fork_pid, NULL, 0);
 	
-	// clean up
-cleanup:
-	exit(0);
+	exit(EXIT_SUCCESS);
+failure:
+	exit(EXIT_FAILURE);
 }
 
 void exec1(int *pipe1)
@@ -123,4 +131,39 @@ void exec3(int *pipe2)
 	// this executes on failure
 	perror("execlp egrep");
 	exit(1);
+}
+
+int parse_options(syscall_macros_t *s, int argc, char *argv[])
+{
+	/**
+	 * a - All.
+	 * h - display help.
+	 * i - input file.
+	 * m - check for a specific macro.
+	 */
+	int opt;
+	while (( opt = getopt(argc, argv, "ahi:m:")) != -1) {
+		switch (opt) {
+		case 'a':
+			printf("TODO: Display All\n");
+			opt = -1;
+			break;
+		case 'h':
+			printf("TODO: Display Usage\n");
+			return -1;
+		case 'i':
+			printf("TODO: Get input file\n");
+			break;
+		case 'm':
+			printf("TODO: Lookup specific macro\n");
+			opt = -1;
+			break;
+		default:
+			printf("TODO: Display Usage\n");
+			return -1;
+		}
+
+	}
+
+	return 0;
 }
