@@ -27,6 +27,7 @@ void exec3(int *pipe2);
 
 int main_loop();
 int parse_options(syscall_macros_t *s, int argc, char *argv[]);
+void usage(void);
 
 int main(int argc, char * argv[])
 {
@@ -41,8 +42,6 @@ int main(int argc, char * argv[])
 	if (check == -1) {
 		goto failure;
 	}
-
-	// TODO: open and read into Syscall macro struct
 
 	// create pipe 1
 	pipe(pipe1);
@@ -142,14 +141,10 @@ int parse_options(syscall_macros_t *s, int argc, char *argv[])
 	 * m - check for a specific macro.
 	 */
 	int opt;
-	while (( opt = getopt(argc, argv, "ahi:m:")) != -1) {
+	while (( opt = getopt(argc, argv, "hi:m:")) != -1) {
 		switch (opt) {
-		case 'a':
-			printf("TODO: Display All\n");
-			opt = -1;
-			break;
 		case 'h':
-			printf("TODO: Display Usage\n");
+			usage();
 			return -1;
 		case 'i':
 			printf("TODO: Get input file\n");
@@ -159,11 +154,21 @@ int parse_options(syscall_macros_t *s, int argc, char *argv[])
 			opt = -1;
 			break;
 		default:
-			printf("TODO: Display Usage\n");
+			usage();
 			return -1;
 		}
 
 	}
 
 	return 0;
+}
+
+void usage(void)
+{
+	printf("\nUsage:\n  sysholler [options] <file/macro>\n\n");
+	printf("A tool for finding syscall numbers\n\n");
+	printf("Options:\n");
+	printf(" -h\t\tdisplay this help\n");
+	printf(" -i\t\tsearch for syscall numbers usings macros from an input file\n");
+	printf(" -m\t\tsearch for a specific macro\n");
 }
