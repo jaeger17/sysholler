@@ -171,8 +171,10 @@ int parse_options(syscall_macros_t *sm, int argc, char *argv[])
 			}
 			break;
 		case 'm':
-			printf("TODO: Lookup specific macro\n");
 			opt = -1;
+			sm->count = 1;
+			sm->buffer = optarg;
+			printf("%s\n", sm->buffer);
 			break;
 		default:
 			usage();
