@@ -8,5 +8,8 @@ BIN = ./bin
 sysholler: $(SRC)/sysholler.c
 	$(CC) $(CFLAGS) $? -o $(BIN)/$@
 
+debug: CFLAGS += -g
+debug: sysholler
+
 clean:
 	$(RM) $(BIN)/*
