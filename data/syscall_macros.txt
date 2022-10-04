@@ -1,0 +1,8 @@
+SYS_read
+SYS_write
+SYS_open
+SYS_shmget
+SYS_fstat
+SYS_lstat
+SYS_noexist
+SYS_sysholler
