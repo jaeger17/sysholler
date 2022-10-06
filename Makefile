@@ -13,3 +13,5 @@ debug: sysholler
 
 clean:
 	$(RM) $(BIN)/*
+
+$(shell mkdir -p $(BIN))

@@ -47,22 +47,25 @@ void usage(void);
 int main(int argc, char * argv[])
 {
 	syscall_macros_t sm = {0};
+	int status = EXIT_SUCCESS;
 
 	// check command-line options
 	if (parse_options(&sm, argc, argv) == -1) {
 		fprintf(stderr, "error parsing options");
-		goto failure;
+		status = EXIT_FAILURE;
+		goto CLEANUP;
 	}
 
 	// execute syscall lookup
 	if (execute_lookup(&sm) == -1) {
 		fprintf(stderr, "error executing lookup");
-		goto failure;
+		status = EXIT_FAILURE;
 	}
+
+CLEANUP:
+	if (sm.buffer) free(sm.buffer);
 	
-	exit(EXIT_SUCCESS);
-failure:
-	exit(EXIT_FAILURE);
+	exit(status);
 }
 
 void exec1(int *pipe1, char *macro)
@@ -153,6 +156,10 @@ int parse_options(syscall_macros_t *sm, int argc, char *argv[])
 
 	}
 
+	if (NULL != sm->fp) {
+		fclose(sm->fp);
+	}
+
 	return 0;
 }
 
@@ -187,7 +194,6 @@ int load_input_file(syscall_macros_t *sm)
             sm->count++;
 		}
 	}
-	sm->count++;
 	memset(&sb, 0, sizeof(struct stat));
 	return 0;
 
@@ -283,15 +289,9 @@ int execute_lookup(syscall_macros_t *sm)
 
 		fflush(stdout);
 		memset(buffer, 0, 16);
-
 		close(sm->pipe3[READ_SIDE]);
 		close(sm->pipe3[WRITE_SIDE]);
-		
-
-	
-
 	}
-
 	
 	return 0;
 }
