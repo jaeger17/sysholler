@@ -63,6 +63,7 @@ int main(int argc, char * argv[])
 	}
 
 CLEANUP:
+	if (sm.count == 1) sm.buffer = NULL;
 	if (sm.buffer) free(sm.buffer);
 	
 	exit(status);
