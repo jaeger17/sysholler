@@ -43,7 +43,7 @@ jobs:
           
       - name: Run Tests with Valgrind
         run: |
-           valgrind --leak-check=full  --xml=yes --xml-file=valgrind.xml ./stats
+           valgrind --leak-check=full  --xml=yes --xml-file=valgrind.xml ./sysholler -i ./data/syscall_macros.txt
 
       # 
       - name: Valgrind Memory check
