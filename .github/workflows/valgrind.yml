@@ -50,6 +50,6 @@ jobs:
         run: |
            pip install ValgrindCI
            echo "Summary report of errors"
-           valgrind-ci output_file.xml --summary
-           valgrind-ci output_file.xml --abort-on-errors # abort
+           valgrind-ci valgrind.xml --summary
+           valgrind-ci valgrind.xml --abort-on-errors # abort
 
