@@ -4,6 +4,7 @@
 ![Bash Badge](https://img.shields.io/badge/GNU%20Bash-4EAA25?style=for-the-badge&logo=GNU%20Bash&logoColor=white)
 
 [![Valgrind](https://github.com/jaeger17/sysholler/actions/workflows/valgrind.yml/badge.svg?branch=main)](https://github.com/jaeger17/sysholler/actions/workflows/valgrind.yml)
+![Downloads](https://img.shields.io/github/downloads/jaeger17/sysholler/total.svg)
 
 # sysholler
 Syscall ID finder for Linux
