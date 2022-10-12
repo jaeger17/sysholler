@@ -43,13 +43,13 @@ jobs:
           
       - name: Run Tests with Valgrind
         run: |
-           valgrind --leak-check=full  --xml=yes --xml-file=valgrind.xml ./stats
+           valgrind --leak-check=full --xml=yes --xml-file=valgrind.xml ./bin/sysholler -i ./data/syscall_macros.txt
 
       # 
       - name: Valgrind Memory check
         run: |
            pip install ValgrindCI
            echo "Summary report of errors"
-           valgrind-ci output_file.xml --summary
-           valgrind-ci output_file.xml --abort-on-errors # abort
+           valgrind-ci valgrind.xml --summary
+           valgrind-ci valgrind.xml --abort-on-errors # abort
 
